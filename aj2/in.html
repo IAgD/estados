@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX FORM</title>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="spin.min.js"></script>
+	<script type="text/javascript">
+
+		$(document).on("ready",function(){
+			$("#main form").on("submit",function(e){
+				e.preventDefault();
+				$.ajax({
+					url:'peticion.php',
+					type: 'post',
+					data: $("#main form").serialize(),
+					success: function(resp){$("#status").html("<p>OK</p>");console.log(resp)},
+					error: function(jqXHR,estado,error){console.log(estado);console.log(error);},
+					complete:function(jqXHR,estado){console.log(estado);}
+				})
+			});
+		});
+
+	</script>
+	<style type="text/css">
+		*{font-family: "Segoe UI Light"}
+		body{background: skyblue;}
+	</style>
+</head>
+<body>
+	<div id="main">
+		<h1>Formulario contacto</h1>
+		<form action="peticion.php" method="POST" name="fo">
+			<input type="text" name="nombre" placeholder="Nombre.." required="required"><br>
+			<input type="email" name="mail" placeholder="Correo electronico.." required="required"><br>
+			<textarea name="mensaje" placeholder="mensaje" required="required"></textarea><br>
+			<div>
+				<input type="submit" name="send" value="Enviar">
+				<div id="status"></div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
